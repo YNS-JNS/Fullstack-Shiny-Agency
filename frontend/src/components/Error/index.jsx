@@ -4,7 +4,7 @@ import colors from '../../utils/style/colors';
 // Importing 404 svg:
 import NotFound from '../../assets/404.svg';
 // _____________________________________________________
-
+import { useTheme } from '../../utils/hooks'; // Using custom hook for theme
 // Styled components: __________________________________
 // Importing styled-components library
 import styled from 'styled-components';
@@ -14,18 +14,20 @@ const ErrorWrapper = styled.div`
    margin-top: 20px;
    display: flex;
    flex-direction: column;
-   background-color: ${colors.backgroundLight};
+   background-color: ${({ theme }) =>
+      theme === 'light' ? colors.backgroundLight : colors.backgroundDark};
    align-items: center;
 `;
 
 // ErrorTitle h1:
 const ErrorTitle = styled.h1`
+   color: ${({ theme }) => (theme === 'light' ? '#000000' : '#ffffff')};
    font-weight: 300;
 `;
 // ErrorSubtitle h2:
 const ErrorSubtitle = styled.h2`
    font-weight: 300;
-   color: ${colors.secondary};
+   color: ${({ theme }) => (theme === 'light' ? colors.secondary : '#ffffff')};
 `;
 // Illustration img:
 const Illustration = styled.img`
@@ -34,11 +36,12 @@ const Illustration = styled.img`
 // ___________________________________________________
 
 const Error = () => {
+   const { theme } = useTheme();
    return (
-      <ErrorWrapper>
-         <ErrorTitle>Oups...</ErrorTitle>
+      <ErrorWrapper theme={theme}>
+         <ErrorTitle theme={theme}>Oups...</ErrorTitle>
          <Illustration src={NotFound} alt="Not found" />
-         <ErrorSubtitle>
+         <ErrorSubtitle theme={theme}>
             Il semblerait que la page que vous cherchez n’existe pas
          </ErrorSubtitle>
       </ErrorWrapper>

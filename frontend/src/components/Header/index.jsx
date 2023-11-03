@@ -3,11 +3,12 @@
 import { StyledLink } from '../../utils/style/Atoms';
 // Importing logo
 import DarkLogo from '../../assets/dark-logo.png';
+import LightLogo from '../../assets/light-logo.png';
 // _____________________________________________________
 // Importing Link from React router dom library:
 import { Link } from 'react-router-dom';
 // _____________________________________________________
-
+import { useTheme } from '../../utils/hooks'; // using custom hook for theme
 // Styled components: __________________________________
 // Importing styled-components library:
 import styled from 'styled-components';
@@ -27,14 +28,19 @@ const HomeLogo = styled.img`
 // _______________________________________
 
 const Header = () => {
+   const { theme } = useTheme();
    return (
       <NavContainer>
          <Link to="/">
-            <HomeLogo src={DarkLogo} />
+            <HomeLogo src={theme === 'light' ? DarkLogo : LightLogo} />
          </Link>
          <div>
-            <StyledLink to="/">Accueil</StyledLink>
-            <StyledLink to="/freelances">Profils</StyledLink>
+            <StyledLink $theme={theme} to="/">
+               Accueil
+            </StyledLink>
+            <StyledLink $theme={theme} to="/freelances">
+               Profils
+            </StyledLink>
             <StyledLink to="/survey/1" $isFullLink>
                Faire le test
             </StyledLink>

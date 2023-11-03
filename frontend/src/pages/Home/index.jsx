@@ -2,6 +2,7 @@
 import colors from '../../utils/style/colors';
 import { StyledLink } from '../../utils/style/Atoms';
 import HomeIllustration from '../../assets/home-illustration.svg';
+import { useTheme } from '../../utils/hooks';
 // _____________________________________________________
 
 // Styled components: __________________________________
@@ -14,14 +15,16 @@ const HomeWrapper = styled.div`
    justify-content: center;
 `;
 
-// HomeContainer dov:
+// HomeContainer div:
 const HomeContainer = styled.div`
+   background-color: ${({ theme }) =>
+      theme === 'light' ? colors.backgroundLight : colors.backgroundDark};
    margin: 30px;
-   background-color: ${colors.backgroundLight};
    padding: 60px 90px;
    display: flex;
    flex-direction: row;
    max-width: 1200px;
+   border-radius: 15px;
 `;
 
 // LeftCol div:
@@ -40,6 +43,7 @@ const StyledTitle = styled.h2`
    padding-bottom: 30px;
    max-width: 280px;
    line-height: 50px;
+   color: ${({ theme }) => (theme === 'light' ? '#000000' : '#ffffff')};
 `;
 
 // Illustration img:
@@ -50,11 +54,12 @@ const Illustration = styled.img`
 // _______________________________________
 
 const Home = () => {
+   const { theme } = useTheme();
    return (
       <HomeWrapper>
-         <HomeContainer>
+         <HomeContainer theme={theme}>
             <LeftCol>
-               <StyledTitle>
+               <StyledTitle theme={theme}>
                   Repérez vos besoins, on s’occupe du reste, avec les meilleurs
                   talents
                </StyledTitle>

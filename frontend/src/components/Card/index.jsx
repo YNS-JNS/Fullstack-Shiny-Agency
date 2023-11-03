@@ -8,13 +8,13 @@ import DefaultPicture from '../../assets/profile.png';
 // Importing colors
 import colors from '../../utils/style/colors';
 // _____________________________________________________
-
+import { useTheme } from '../../utils/hooks'; // Using custom hook for theme
 // Styled components: __________________________________
 // Importing styled-components library
 import styled from 'styled-components';
 // Label:
 const CardLabel = styled.span`
-   color: ${colors.primary};
+   color: ${({ theme }) => (theme === 'light' ? colors.primary : '#ffffff')};
    font-size: 22px;
    font-weight: normal;
    padding-left: 15px;
@@ -29,7 +29,7 @@ const CardImage = styled.img`
 `;
 // Title span:
 const CardTitle = styled.span`
-   color: black;
+   color: ${({ theme }) => (theme === 'light' ? '#000000' : '#ffffff')};
    font-size: 22px;
    font-weight: normal;
    align-self: center;
@@ -40,7 +40,8 @@ const CardWrapper = styled.div`
    flex-direction: column;
    justify-content: space-around;
    padding: 15px;
-   background-color: ${colors.background};
+   background-color: ${({ theme }) =>
+      theme === 'light' ? colors.backgroundLight : colors.backgroundDark};
    border-radius: 30px;
    width: 300px;
    height: 300px;
@@ -54,11 +55,12 @@ const CardWrapper = styled.div`
 
 // Definition of the Card component: ___________________
 const Card = ({ label, title, picture }) => {
+   const { theme } = useTheme();
    return (
-      <CardWrapper>
-         <CardLabel>{label}</CardLabel>
+      <CardWrapper theme={theme}>
+         <CardLabel theme={theme}>{label}</CardLabel>
          <CardImage src={picture} alt="freelance" />
-         <CardTitle>{title}</CardTitle>
+         <CardTitle theme={theme}>{title}</CardTitle>
       </CardWrapper>
    );
 };
